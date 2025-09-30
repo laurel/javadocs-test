@@ -1,0 +1,88 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    maven {
+      credentials {
+        username = "${lucidArtifactoryUsername}"
+        password = "${lucidArtifactoryPassword}"
+      }
+      authentication {
+        basic(BasicAuthentication)
+      }
+      url "https://artifactory.lucidworks.com/artifactory/fusion-dev/"
+    }
+    mavenCentral()
+}
+
+group 'com.lucidworks'
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot:2.3.12.RELEASE'
+    implementation 'com.fasterxml.jackson:jackson-bom:2.14.3'
+    implementation 'com.google.guava:guava:32.1.1-jre'
+    implementation "javax.ws.rs:javax.ws.rs-api:2.1"
+    implementation "org.apache.solr:solr-solrj:8.8.1"
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
+    implementation "org.apache.commons:commons-lang3:3.4"
+    implementation "io.dropwizard.metrics:metrics-core:4.0.5"
+    implementation "org.apache.commons:commons-collections4:4.1"
+    implementation "org.glassfish.jersey.core:jersey-common:2.30.1"
+    implementation "commons-jxpath:commons-jxpath:1.3"
+    implementation "com.esotericsoftware:kryo-shaded:3.0.3"
+    implementation "org.springframework:spring-context:5.2.13.RELEASE"
+    implementation "org.apache.curator:curator-framework:5.1.0"
+    implementation "com.google.inject:guice:4.2.2"
+    implementation "com.lucidworks.cloud:fusion-error-core:6.4.1"
+    implementation ("com.lucidworks.fusion:lucid-client:6.3.2") {
+        transitive false
+    }
+    implementation ("com.lucidworks.fusion:lucid-item-store:6.3.2") {
+        transitive false
+    }
+}
+
+javadoc {
+    source fileTree('tempJavadocs')
+    classpath += project.files(['tempJavadocs/fusion-query/query-pipeline/build/classes/java/main/',
+                                'tempJavadocs/fusion-chassis/lucid-client/build/classes/java/main/',
+                                'tempJavadocs/fusion-chassis/lucid-solr-rest-client/build/classes/java/main/',
+                                'tempJavadocs/fusion-chassis/lucid-item-store/build/classes/java/main/',
+                                'tempJavadocs/fusion-chassis/lucid-base-service/build/classes/java/main/',
+                                'tempJavadocs/fusion-pipelines/fusion-base-pipeline/build/classes/java/main/',
+                                'tempJavadocs/fusion-pipelines/fusion-pipeline-client/build/classes/java/main/'])
+
+    include('**/BufferingSolrServer.java')
+    include('**/SolrClient.java')
+
+    /* Fusion Pipeline Objects */
+    include('**/SolrClusterComponent.java')
+
+    /* Query Pipeline Objects */
+    include('**/Request.java')
+    include('**/Response.java')
+    include('**/QueryRequestAndResponse.java')
+    include('**/src/main/java/com/lucidworks/apollo/solr/response/*Response.java')
+    include('**/ResponseDocument.java')
+    include('**/search-dsl/search-dsl/src/main/java/**/*.java')
+
+    /* Index Pipeline Objects */
+    include('**/com/lucidworks/apollo/pipeline/Context.java')
+    include('**/StageCallback.java')
+    include('**/PipelineDocument.java')
+    include('**/PipelineField.java')
+    include('**/Command.java')
+    include('**/Annotation.java')
+    include('**/AnnotatedText.java')
+    include('**/src/main/java/com/lucidworks/apollo/aggregation/Aggregatable.java')
+    include('**/src/main/java/com/lucidworks/apollo/common/Copyable.java')
+    options {
+        links 'https://docs.oracle.com/javase/8/docs/api/'
+        links 'https://javadoc.io/doc/javax.ws.rs/javax.ws.rs-api/2.1.1/'
+        links 'https://guava.dev/releases/32.1.1-jre/api/docs/'
+        //linksOffline 'https://lucene.apache.org/solr/8_8_1/solr-solrj/', 'solrj-ref'
+        addStringOption('Xdoclint:none', '-quiet')
+        setMemberLevel 'public'
+    }
+}

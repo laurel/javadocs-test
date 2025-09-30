@@ -1,0 +1,5 @@
+com.lucidworks.apollo.common.pipeline
+com.lucidworks.apollo.component
+com.lucidworks.apollo.pipeline
+com.lucidworks.apollo.pipeline.index
+com.lucidworks.apollo.pipeline.query

@@ -1,0 +1,9 @@
+com.lucidworks.apollo.aggregation
+com.lucidworks.apollo.common
+com.lucidworks.apollo.common.models.nlp
+com.lucidworks.apollo.common.pipeline
+com.lucidworks.apollo.component
+com.lucidworks.apollo.pipeline.query
+com.lucidworks.apollo.solr.client
+com.lucidworks.apollo.solr.response
+com.lucidworks.search.dsl.response
